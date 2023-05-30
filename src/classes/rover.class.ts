@@ -10,16 +10,38 @@ export class Rover extends Entity {
      */
     forward(): Point {
         switch(this.position.direction) {
-            case Direction.East: this.position.x++;
+            case Direction.East: 
+                if( this.position.x === this.map.xmax ){
+                    this.position.x = this.map.xmin
+                }else{
+                    this.position.x++;
+                }
             break;
-            case Direction.West: this.position.x--;
+            
+            case Direction.West: 
+                if( this.position.x === this.map.xmin ){
+                    this.position.x = this.map.xmax
+                }else{
+                    this.position.x--;
+                }
             break;
-            case Direction.North: this.position.y++;
+            
+            case Direction.North: 
+                if( this.position.y === this.map.ymax ){
+                    this.position.y = this.map.ymin
+                }else{
+                    this.position.y++;
+                }
             break;
-            case Direction.South: this.position.y--;
+
+            case Direction.South: 
+                if( this.position.y === this.map.ymin ){
+                    this.position.y = this.map.ymax
+                }else{
+                    this.position.y--;
+                }
             break;
         }
-
         return this.position;
     }
 
@@ -30,18 +52,45 @@ export class Rover extends Entity {
      */
     backward(): Point {
         switch(this.position.direction) {
-            case Direction.East: this.position.x--;
+            case Direction.East:
+                if (this.position.x === this.map.xmax ){
+                    this.position.x = this.map.xmin
+                } else {
+                    this.position.x++;
+                }
             break;
-            case Direction.West: this.position.x++;
+
+            case Direction.West:
+                if (this.position.x === this.map.xmin){
+                    this.position.x = this.map.xmax
+                } else {
+                    this.position.x--;
+                }
             break;
-            case Direction.North: this.position.y--;
+
+            case Direction.North:
+                if (this.position.y === this.map.ymax){
+                    this.position.y = this.map.ymin
+                } else {
+                    this.position.y--;
+                }
             break;
-            case Direction.South: this.position.y++;
+
+            case Direction.South: 
+                if (this.position.y === this.map.ymin){
+                    this.position.y = this.map.ymax
+                } else {
+                    this.position.y++;
+                }
             break;
         }
-
         return this.position;
     }
+
+    /**
+     * This function determine new direction of the Rover.
+     * 1. Change direction
+     */
     turnRight(): Point {
         switch(this.position.direction) {
             case Direction.East: this.position.direction = Direction.South;
@@ -55,6 +104,11 @@ export class Rover extends Entity {
         }
         return this.position;
     }
+
+    /**
+     * This function determine new direction of the Rover.
+     * 1. Change direction
+     */
     turnLeft(): Point {
         switch(this.position.direction) {
             case Direction.East: this.position.direction = Direction.North;
@@ -68,5 +122,4 @@ export class Rover extends Entity {
         }
         return this.position;
     }
-    
 }
