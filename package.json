@@ -1,0 +1,12 @@
+{
+  "name": "ts-rover",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/Energy45/ts-rover.git",
+  "author": "Dylan ANTONIOTTI <dylan.antoniotti@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^5.0.4",
+    "@types/node": "^20.2.5"
+  }
+}
