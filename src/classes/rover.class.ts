@@ -174,26 +174,5 @@ export class Rover extends Entity {
         return [this.position, this.direction];
     }
 
-    handleCommand(command: string) {
-        const commandSeparate = command.split('');
-
-        commandSeparate.forEach((cmd) => {
-            switch (cmd) {
-                case 'A':
-                    this.forward();
-                    break;
-                case 'R':
-                    this.backward();
-                    break;
-                case 'D':
-                    this.turnRight();
-                    break;
-                case 'G':
-                    this.turnLeft();
-                    break;
-                default:
-                    break;
-            }
-        });
-    }
+    
 }
