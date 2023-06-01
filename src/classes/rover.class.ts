@@ -32,7 +32,7 @@ export class Rover extends Entity {
                 }else{
                     const newPosition: Point = {
                         ...this.position,
-                        x: this.position.x -1,
+                        x: this.position.x - 1,
                     };
                     hasObstacle = !this.map.isObstacleFree(newPosition);
                     if (hasObstacle) throw new ObstacleHitException(newPosition);
@@ -46,7 +46,7 @@ export class Rover extends Entity {
                 }else{
                     const newPosition: Point = {
                         ...this.position,
-                        y:  this.position.y +1,
+                        y:  this.position.y + 1,
                     };
                     hasObstacle = !this.map.isObstacleFree(newPosition);
                     if (hasObstacle) throw new ObstacleHitException(newPosition);
@@ -60,7 +60,7 @@ export class Rover extends Entity {
                 }else{
                     const newPosition: Point = {
                         ...this.position,
-                        y:  this.position.y -1,
+                        y:  this.position.y - 1,
                     };
                     hasObstacle = !this.map.isObstacleFree(newPosition);
                     if (hasObstacle) throw new ObstacleHitException(newPosition);
@@ -80,21 +80,7 @@ export class Rover extends Entity {
         let hasObstacle: boolean;
         switch(this.direction) {
             case Direction.East:
-                if (this.position.x === this.map.xmax ){
-                    this.position.x = this.map.xmin
-                } else {
-                    const newPosition: Point = {
-                        ...this.position,
-                        x:  this.position.x +1,
-                    };
-                    hasObstacle = !this.map.isObstacleFree(newPosition);
-                    if (hasObstacle) throw new ObstacleHitException(newPosition);
-                    this.position = newPosition;
-                }
-            break;
-
-            case Direction.West:
-                if (this.position.x === this.map.xmin){
+                if (this.position.x === this.map.xmin ){
                     this.position.x = this.map.xmax
                 } else {
                     const newPosition: Point = {
@@ -107,9 +93,23 @@ export class Rover extends Entity {
                 }
             break;
 
+            case Direction.West:
+                if (this.position.x === this.map.xmax){
+                    this.position.x = this.map.xmin
+                } else {
+                    const newPosition: Point = {
+                        ...this.position,
+                        x:  this.position.x +1,
+                    };
+                    hasObstacle = !this.map.isObstacleFree(newPosition);
+                    if (hasObstacle) throw new ObstacleHitException(newPosition);
+                    this.position = newPosition;
+                }
+            break;
+
             case Direction.North:
-                if (this.position.y === this.map.ymax){
-                    this.position.y = this.map.ymin
+                if (this.position.y === this.map.ymin){
+                    this.position.y = this.map.ymax
                 } else {
                     const newPosition: Point = {
                         ...this.position,
@@ -122,8 +122,8 @@ export class Rover extends Entity {
             break;
 
             case Direction.South: 
-                if (this.position.y === this.map.ymin){
-                    this.position.y = this.map.ymax
+                if (this.position.y === this.map.ymax){
+                    this.position.y = this.map.ymin
                 } else {
                     const newPosition: Point = {
                         ...this.position,
@@ -142,7 +142,7 @@ export class Rover extends Entity {
      * This function determine new direction of the Rover.
      * 1. Change direction
      */
-    turnRight(): Point {
+    turnRight(): [Point, Direction] {
         switch(this.direction) {
             case Direction.East: this.direction = Direction.South;
             break;
@@ -153,14 +153,14 @@ export class Rover extends Entity {
             case Direction.South: this.direction = Direction.West;
             break;
         }
-        return this.position;
+        return [this.position, this.direction];
     }
 
     /**
      * This function determine new direction of the Rover.
      * 1. Change direction
      */
-    turnLeft(): Point {
+    turnLeft(): [Point, Direction] {
         switch(this.direction) {
             case Direction.East: this.direction = Direction.North;
             break;
@@ -171,7 +171,7 @@ export class Rover extends Entity {
             case Direction.South: this.direction = Direction.East;
             break;
         }
-        return this.position;
+        return [this.position, this.direction];
     }
 
     handleCommand(command: string) {

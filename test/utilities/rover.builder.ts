@@ -13,15 +13,22 @@ export class RoverBuilder {
   }
   private _direction = Direction.East;
 
-  setPosition(position: Point){
-    return this._basePosition = position;
+  setPosition(position: Point): RoverBuilder {
+    this._basePosition = position;
+    return this;
   }
 
-  setDirection(direction: Direction){
-    return this._direction = direction;
+  setDirection(direction: Direction): RoverBuilder{
+    this._direction = direction;
+    return this;
   }
 
-  Build(): Rover {
+  setMap(map: MarsMap): RoverBuilder {
+    this._map = map;
+    return this;
+  }
+
+  build(): Rover {
     return new Rover(this._map, this._basePosition, this._direction);
   }
 }

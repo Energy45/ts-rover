@@ -15,7 +15,7 @@ export abstract class Entity{
 
     abstract forward(): Point;
     abstract backward(): Point;
-    abstract turnRight(): Point;
-    abstract turnLeft(): Point;
+    abstract turnRight(): [Point, Direction];
+    abstract turnLeft(): [Point, Direction];
 
 }
