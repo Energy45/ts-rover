@@ -10,8 +10,9 @@ export class RoverBuilder {
   private _map = new MarsMap(100, 100, this._obstacles);
   private _position = new Position(0, 0, Orientation.East)
 
-  setPosition(position: Position){
-    return this._position = position;
+  setPosition(position: Position): RoverBuilder{
+    this._position = position;
+    return this;
   }
 
   setMap(map: MarsMap): RoverBuilder {
