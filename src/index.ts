@@ -11,15 +11,6 @@ const defaultPosition = new Position(0, 0, Orientation.East)
 const rover = new Rover(map, defaultPosition);
 
 try {
-  // console.log(rover.forward()) // x = 1, y = 0, EAST
-  // console.log(rover.turnLeft()) // x = 1, y = 0, NORTH
-  // console.log(rover.forward()) // x = 1, y = 1, NORTH
-  // console.log(rover.turnRight())
-  // console.log(rover.forward())
-  // console.log(rover.forward())
-  // console.log(rover.backward())
-  // console.log(rover.turnLeft())
-  // console.log(rover.backward())
   rover.handleCommand('AGADAARGR');
 } catch(error) {
   if (error instanceof ObstacleHitException) {

@@ -70,8 +70,8 @@ export class Rover extends Entity {
 		let hasObstacle: boolean;
 		switch (this._position._orientation) {
 			case Orientation.East:
-				if (this._position._x === this.map.xmax) {
-					this._position._x = this.map.xmin
+				if (this._position._x === this.map.xmin) {
+					this._position._x = this.map.xmax
 				} else {
 					const newPosition = new Position(this._position._x - 1, this._position._y, this._position._orientation)
 					hasObstacle = !this.map.isObstacleFree(newPosition);
@@ -81,8 +81,8 @@ export class Rover extends Entity {
 				break;
 
 			case Orientation.West:
-				if (this._position._x === this.map.xmin) {
-					this._position._x = this.map.xmax
+				if (this._position._x === this.map.xmax) {
+					this._position._x = this.map.xmin
 				} else {
 					const newPosition = new Position(this._position._x + 1, this._position._y, this._position._orientation)
 					hasObstacle = !this.map.isObstacleFree(newPosition);
@@ -92,8 +92,8 @@ export class Rover extends Entity {
 				break;
 
 			case Orientation.North:
-				if (this._position._y === this.map.ymax) {
-					this._position._y = this.map.ymin
+				if (this._position._y === this.map.ymin) {
+					this._position._y = this.map.ymax
 				} else {
 					const newPosition = new Position(this._position._x, this._position._y - 1, this._position._orientation)
 					hasObstacle = !this.map.isObstacleFree(newPosition);
@@ -103,8 +103,8 @@ export class Rover extends Entity {
 				break;
 
 			case Orientation.South:
-				if (this._position._y === this.map.ymin) {
-					this._position._y = this.map.ymax
+				if (this._position._y === this.map.ymax) {
+					this._position._y = this.map.ymin
 				} else {
 					const newPosition = new Position(this._position._x, this._position._y + 1, this._position._orientation)
 					hasObstacle = !this.map.isObstacleFree(newPosition);
