@@ -5,10 +5,12 @@ import { MarsMap } from "./map.class";
 export abstract class Entity{
     protected map: MarsMap;
 	protected position : Point;
+    protected direction: Direction;
 
-    constructor(map: MarsMap, position: Point){
+    constructor(map: MarsMap, position: Point, direction: Direction){
         this.map = map;
         this.position = position;
+        this.direction = direction;
     }
 
     abstract forward(): Point;

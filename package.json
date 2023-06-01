@@ -6,7 +6,8 @@
   "author": "Dylan ANTONIOTTI <dylan.antoniotti@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "start": "tsc && node build\\index.js"
   },
   "devDependencies": {
     "@types/node": "^20.2.5",

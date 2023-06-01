@@ -1,6 +1,7 @@
 import { Point } from "../types/point.type";
 import { Entity } from "./entity.class";
 import { Direction } from "../enums/direction.enum";
+import { ObstacleHitException } from "../exceptions/obstacle-hit.exception";
 
 export class Rover extends Entity {
     /**
@@ -9,12 +10,19 @@ export class Rover extends Entity {
      * 2. Change position
      */
     forward(): Point {
-        switch(this.position.direction) {
+        let hasObstacle: boolean;
+        switch(this.direction) {
             case Direction.East: 
-                if( this.position.x === this.map.xmax ){
+                if ( this.position.x === this.map.xmax ){
                     this.position.x = this.map.xmin
-                }else{
-                    this.position.x++;
+                } else {
+                    const newPosition: Point = {
+                        ...this.position,
+                        x: this.position.x + 1,
+                    };
+                    hasObstacle = !this.map.isObstacleFree(newPosition);
+                    if (hasObstacle) throw new ObstacleHitException(newPosition);
+                    this.position = newPosition;
                 }
             break;
             
@@ -22,7 +30,13 @@ export class Rover extends Entity {
                 if( this.position.x === this.map.xmin ){
                     this.position.x = this.map.xmax
                 }else{
-                    this.position.x--;
+                    const newPosition: Point = {
+                        ...this.position,
+                        x: this.position.x -1,
+                    };
+                    hasObstacle = !this.map.isObstacleFree(newPosition);
+                    if (hasObstacle) throw new ObstacleHitException(newPosition);
+                    this.position = newPosition;
                 }
             break;
             
@@ -30,7 +44,13 @@ export class Rover extends Entity {
                 if( this.position.y === this.map.ymax ){
                     this.position.y = this.map.ymin
                 }else{
-                    this.position.y++;
+                    const newPosition: Point = {
+                        ...this.position,
+                        y:  this.position.y +1,
+                    };
+                    hasObstacle = !this.map.isObstacleFree(newPosition);
+                    if (hasObstacle) throw new ObstacleHitException(newPosition);
+                    this.position = newPosition;
                 }
             break;
 
@@ -38,7 +58,13 @@ export class Rover extends Entity {
                 if( this.position.y === this.map.ymin ){
                     this.position.y = this.map.ymax
                 }else{
-                    this.position.y--;
+                    const newPosition: Point = {
+                        ...this.position,
+                        y:  this.position.y -1,
+                    };
+                    hasObstacle = !this.map.isObstacleFree(newPosition);
+                    if (hasObstacle) throw new ObstacleHitException(newPosition);
+                    this.position = newPosition;
                 }
             break;
         }
@@ -51,12 +77,19 @@ export class Rover extends Entity {
      * 2. Change position
      */
     backward(): Point {
-        switch(this.position.direction) {
+        let hasObstacle: boolean;
+        switch(this.direction) {
             case Direction.East:
                 if (this.position.x === this.map.xmax ){
                     this.position.x = this.map.xmin
                 } else {
-                    this.position.x++;
+                    const newPosition: Point = {
+                        ...this.position,
+                        x:  this.position.x +1,
+                    };
+                    hasObstacle = !this.map.isObstacleFree(newPosition);
+                    if (hasObstacle) throw new ObstacleHitException(newPosition);
+                    this.position = newPosition;
                 }
             break;
 
@@ -64,7 +97,13 @@ export class Rover extends Entity {
                 if (this.position.x === this.map.xmin){
                     this.position.x = this.map.xmax
                 } else {
-                    this.position.x--;
+                    const newPosition: Point = {
+                        ...this.position,
+                        x:  this.position.x -1,
+                    };
+                    hasObstacle = !this.map.isObstacleFree(newPosition);
+                    if (hasObstacle) throw new ObstacleHitException(newPosition);
+                    this.position = newPosition;
                 }
             break;
 
@@ -72,7 +111,13 @@ export class Rover extends Entity {
                 if (this.position.y === this.map.ymax){
                     this.position.y = this.map.ymin
                 } else {
-                    this.position.y--;
+                    const newPosition: Point = {
+                        ...this.position,
+                        y: this.position.y -1,
+                    };
+                    hasObstacle = !this.map.isObstacleFree(newPosition);
+                    if (hasObstacle) throw new ObstacleHitException(newPosition);
+                    this.position = newPosition;
                 }
             break;
 
@@ -80,7 +125,13 @@ export class Rover extends Entity {
                 if (this.position.y === this.map.ymin){
                     this.position.y = this.map.ymax
                 } else {
-                    this.position.y++;
+                    const newPosition: Point = {
+                        ...this.position,
+                        y: this.position.y +1,
+                    };
+                    hasObstacle = !this.map.isObstacleFree(newPosition);
+                    if (hasObstacle) throw new ObstacleHitException(newPosition);
+                    this.position = newPosition;
                 }
             break;
         }
@@ -92,14 +143,14 @@ export class Rover extends Entity {
      * 1. Change direction
      */
     turnRight(): Point {
-        switch(this.position.direction) {
-            case Direction.East: this.position.direction = Direction.South;
+        switch(this.direction) {
+            case Direction.East: this.direction = Direction.South;
             break;
-            case Direction.West: this.position.direction = Direction.North;
+            case Direction.West: this.direction = Direction.North;
             break;
-            case Direction.North: this.position.direction = Direction.East;
+            case Direction.North: this.direction = Direction.East;
             break;
-            case Direction.South: this.position.direction = Direction.West;
+            case Direction.South: this.direction = Direction.West;
             break;
         }
         return this.position;
@@ -110,16 +161,39 @@ export class Rover extends Entity {
      * 1. Change direction
      */
     turnLeft(): Point {
-        switch(this.position.direction) {
-            case Direction.East: this.position.direction = Direction.North;
+        switch(this.direction) {
+            case Direction.East: this.direction = Direction.North;
             break;
-            case Direction.West: this.position.direction = Direction.South;
+            case Direction.West: this.direction = Direction.South;
             break;
-            case Direction.North: this.position.direction = Direction.West;
+            case Direction.North: this.direction = Direction.West;
             break;
-            case Direction.South: this.position.direction = Direction.East;
+            case Direction.South: this.direction = Direction.East;
             break;
         }
         return this.position;
+    }
+
+    handleCommand(command: string) {
+        const commandSeparate = command.split('');
+
+        commandSeparate.forEach((cmd) => {
+            switch (cmd) {
+                case 'A':
+                    this.forward();
+                    break;
+                case 'R':
+                    this.backward();
+                    break;
+                case 'D':
+                    this.turnRight();
+                    break;
+                case 'G':
+                    this.turnLeft();
+                    break;
+                default:
+                    break;
+            }
+        });
     }
 }
