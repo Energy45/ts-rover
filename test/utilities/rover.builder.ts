@@ -14,6 +14,11 @@ export class RoverBuilder {
     return this._position = position;
   }
 
+  setMap(map: MarsMap): RoverBuilder {
+    this._map = map;
+    return this;
+  }
+
   build(): Rover {
     return new Rover(this._map, this._position);
   }
