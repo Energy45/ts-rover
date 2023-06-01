@@ -1,27 +1,20 @@
-import { Direction } from "../../src/enums/direction.enum";
+import { Orientation } from "../../src/enums/orientation.enum";
 import { Rover } from "../../src/classes/rover.class";
-import { Point } from "../../src/types/point.type";
 import { MarsMap } from "../../src/classes/map.class";
+import { Point } from "../../src/classes/point.class";
+import { Position } from "../../src/classes/position.class";
 
 export class RoverBuilder {
 
-  private _obstacles: Point[] = [{x:1, y:1}, {x:15, y:15}, {x:20, y:20}, {x:25, y:25}]
+  private _obstacles: Point[] = [new Point(1,1), new Point(15,15), new Point(20,20), new Point(25,25)]
   private _map = new MarsMap(100, 100, this._obstacles);
-  private _basePosition: Point = {
-    x: 10,
-    y: 10,
-  }
-  private _direction = Direction.East;
+  private _position = new Position(0, 0, Orientation.East)
 
-  setPosition(position: Point){
-    return this._basePosition = position;
+  setPosition(position: Position){
+    return this._position = position;
   }
 
-  setDirection(direction: Direction){
-    return this._direction = direction;
-  }
-
-  Build(): Rover {
-    return new Rover(this._map, this._basePosition, this._direction);
+  build(): Rover {
+    return new Rover(this._map, this._position);
   }
 }

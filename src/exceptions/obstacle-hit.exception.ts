@@ -1,11 +1,10 @@
-import { Point } from "../types/point.type";
+import { Position } from "../classes/position.class";
 
 export class ObstacleHitException extends Error {
-    position: Point;
+    position: Position;
     
-    constructor(position: Point) {
+    constructor(position: Position) {
         super();
-
         this.position = position;
     }
 }
