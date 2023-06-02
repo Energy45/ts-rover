@@ -1,4 +1,4 @@
-export enum Direction {
+export enum Orientation {
 	North = "North",
 	South = "South",
 	East = "East",

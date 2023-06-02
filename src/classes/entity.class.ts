@@ -1,21 +1,17 @@
-import { Point } from "../types/point.type";
-import { Direction } from "../enums/direction.enum";
 import { MarsMap } from "./map.class";
+import { Position } from "./position.class";
 
 export abstract class Entity{
     protected map: MarsMap;
-	protected position : Point;
-    protected direction: Direction;
+	protected _position : Position
 
-    constructor(map: MarsMap, position: Point, direction: Direction){
+    constructor(map: MarsMap, position: Position){
         this.map = map;
-        this.position = position;
-        this.direction = direction;
+        this._position = position
     }
 
-    abstract forward(): Point;
-    abstract backward(): Point;
-    abstract turnRight(): [Point, Direction];
-    abstract turnLeft(): [Point, Direction];
-
+    abstract forward(): Position;
+    abstract backward(): Position;
+    abstract turnRight(): Position;
+    abstract turnLeft(): Position;
 }

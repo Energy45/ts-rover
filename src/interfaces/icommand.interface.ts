@@ -1,6 +1,6 @@
 import { Entity } from "../classes/entity.class";
-import { Point } from "../types/point.type";
+import { Position } from "../classes/position.class";
 
 export interface ICommand {
-    execute(entity: Entity): Point;
+    execute(entity: Entity): Position;
 }

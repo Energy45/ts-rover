@@ -1,178 +1,162 @@
-import { Point } from "../types/point.type";
 import { Entity } from "./entity.class";
-import { Direction } from "../enums/direction.enum";
+import { Orientation } from "../enums/orientation.enum";
 import { ObstacleHitException } from "../exceptions/obstacle-hit.exception";
+import { Position } from "./position.class";
 
 export class Rover extends Entity {
-    /**
-     * This function forward the Rover.
-     * 1. Determine direction
-     * 2. Change position
-     */
-    forward(): Point {
-        let hasObstacle: boolean;
-        switch(this.direction) {
-            case Direction.East: 
-                if ( this.position.x === this.map.xmax ){
-                    this.position.x = this.map.xmin
-                } else {
-                    const newPosition: Point = {
-                        ...this.position,
-                        x: this.position.x + 1,
-                    };
-                    hasObstacle = !this.map.isObstacleFree(newPosition);
-                    if (hasObstacle) throw new ObstacleHitException(newPosition);
-                    this.position = newPosition;
-                }
-            break;
-            
-            case Direction.West: 
-                if( this.position.x === this.map.xmin ){
-                    this.position.x = this.map.xmax
-                }else{
-                    const newPosition: Point = {
-                        ...this.position,
-                        x: this.position.x - 1,
-                    };
-                    hasObstacle = !this.map.isObstacleFree(newPosition);
-                    if (hasObstacle) throw new ObstacleHitException(newPosition);
-                    this.position = newPosition;
-                }
-            break;
-            
-            case Direction.North: 
-                if( this.position.y === this.map.ymax ){
-                    this.position.y = this.map.ymin
-                }else{
-                    const newPosition: Point = {
-                        ...this.position,
-                        y:  this.position.y + 1,
-                    };
-                    hasObstacle = !this.map.isObstacleFree(newPosition);
-                    if (hasObstacle) throw new ObstacleHitException(newPosition);
-                    this.position = newPosition;
-                }
-            break;
+	/**
+	 * This function forward the Rover.
+	 * 1. Determine direction
+	 * 2. Change position
+	 */
+	forward(): Position {
+		let hasObstacle: boolean;
+		switch (this._position._orientation) {
+			case Orientation.East:
+				if (this._position._x === this.map.xmax) {
+					this._position._x = this.map.xmin
+				} else {
+					const newPosition = new Position(this._position._x + 1, this._position._y, this._position._orientation)
 
-            case Direction.South: 
-                if( this.position.y === this.map.ymin ){
-                    this.position.y = this.map.ymax
-                }else{
-                    const newPosition: Point = {
-                        ...this.position,
-                        y:  this.position.y - 1,
-                    };
-                    hasObstacle = !this.map.isObstacleFree(newPosition);
-                    if (hasObstacle) throw new ObstacleHitException(newPosition);
-                    this.position = newPosition;
-                }
-            break;
-        }
-        return this.position;
-    }
+					hasObstacle = !this.map.isObstacleFree(newPosition);
 
-    /**
-     * This function backward the Rover.
-     * 1. Determine direction
-     * 2. Change position
-     */
-    backward(): Point {
-        let hasObstacle: boolean;
-        switch(this.direction) {
-            case Direction.East:
-                if (this.position.x === this.map.xmin ){
-                    this.position.x = this.map.xmax
-                } else {
-                    const newPosition: Point = {
-                        ...this.position,
-                        x:  this.position.x -1,
-                    };
-                    hasObstacle = !this.map.isObstacleFree(newPosition);
-                    if (hasObstacle) throw new ObstacleHitException(newPosition);
-                    this.position = newPosition;
-                }
-            break;
+					if (hasObstacle) throw new ObstacleHitException(newPosition);
+					this._position.setPoint(newPosition._x, newPosition._y)
+				}
+				break;
+			case Orientation.West:
+				if (this._position._x === this.map.xmin) {
+					this._position._x = this.map.xmax
+				} else {
+					const newPosition = new Position(this._position._x - 1, this._position._y, this._position._orientation)
 
-            case Direction.West:
-                if (this.position.x === this.map.xmax){
-                    this.position.x = this.map.xmin
-                } else {
-                    const newPosition: Point = {
-                        ...this.position,
-                        x:  this.position.x +1,
-                    };
-                    hasObstacle = !this.map.isObstacleFree(newPosition);
-                    if (hasObstacle) throw new ObstacleHitException(newPosition);
-                    this.position = newPosition;
-                }
-            break;
+					hasObstacle = !this.map.isObstacleFree(newPosition);
+					if (hasObstacle) throw new ObstacleHitException(newPosition);
+					this._position.setPoint(newPosition._x, newPosition._y)
+				}
+				break;
 
-            case Direction.North:
-                if (this.position.y === this.map.ymin){
-                    this.position.y = this.map.ymax
-                } else {
-                    const newPosition: Point = {
-                        ...this.position,
-                        y: this.position.y -1,
-                    };
-                    hasObstacle = !this.map.isObstacleFree(newPosition);
-                    if (hasObstacle) throw new ObstacleHitException(newPosition);
-                    this.position = newPosition;
-                }
-            break;
+			case Orientation.North:
+				if (this._position._y === this.map.ymax) {
+					this._position._y = this.map.ymin
+				} else {
+					const newPosition = new Position(this._position._x, this._position._y + 1, this._position._orientation)
+					hasObstacle = !this.map.isObstacleFree(newPosition);
+					if (hasObstacle) throw new ObstacleHitException(newPosition);
+					this._position.setPoint(newPosition._x, newPosition._y)
+				}
+				break;
 
-            case Direction.South: 
-                if (this.position.y === this.map.ymax){
-                    this.position.y = this.map.ymin
-                } else {
-                    const newPosition: Point = {
-                        ...this.position,
-                        y: this.position.y +1,
-                    };
-                    hasObstacle = !this.map.isObstacleFree(newPosition);
-                    if (hasObstacle) throw new ObstacleHitException(newPosition);
-                    this.position = newPosition;
-                }
-            break;
-        }
-        return this.position;
-    }
+			case Orientation.South:
+				if (this._position._y === this.map.ymin) {
+					this._position._y = this.map.ymax
+				} else {
+					const newPosition = new Position(this._position._x, this._position._y - 1, this._position._orientation)
+					hasObstacle = !this.map.isObstacleFree(newPosition);
+					if (hasObstacle) throw new ObstacleHitException(newPosition);
+					this._position.setPoint(newPosition._x, newPosition._y)
+				}
+				break;
+		}
+		return this._position;
+	}
 
-    /**
-     * This function determine new direction of the Rover.
-     * 1. Change direction
-     */
-    turnRight(): [Point, Direction] {
-        switch(this.direction) {
-            case Direction.East: this.direction = Direction.South;
-            break;
-            case Direction.West: this.direction = Direction.North;
-            break;
-            case Direction.North: this.direction = Direction.East;
-            break;
-            case Direction.South: this.direction = Direction.West;
-            break;
-        }
-        return [this.position, this.direction];
-    }
+	/**
+	 * This function backward the Rover.
+	 * 1. Determine direction
+	 * 2. Change position
+	 */
+	backward(): Position {
+		let hasObstacle: boolean;
+		switch (this._position._orientation) {
+			case Orientation.East:
+				if (this._position._x === this.map.xmin) {
+					this._position._x = this.map.xmax
+				} else {
+					const newPosition = new Position(this._position._x - 1, this._position._y, this._position._orientation)
+					hasObstacle = !this.map.isObstacleFree(newPosition);
+					if (hasObstacle) throw new ObstacleHitException(newPosition);
+					this._position.setPoint(newPosition._x, newPosition._y)
+				}
+				break;
 
-    /**
-     * This function determine new direction of the Rover.
-     * 1. Change direction
-     */
-    turnLeft(): [Point, Direction] {
-        switch(this.direction) {
-            case Direction.East: this.direction = Direction.North;
-            break;
-            case Direction.West: this.direction = Direction.South;
-            break;
-            case Direction.North: this.direction = Direction.West;
-            break;
-            case Direction.South: this.direction = Direction.East;
-            break;
-        }
-        return [this.position, this.direction];
-    }
+			case Orientation.West:
+				if (this._position._x === this.map.xmax) {
+					this._position._x = this.map.xmin
+				} else {
+					const newPosition = new Position(this._position._x + 1, this._position._y, this._position._orientation)
+					hasObstacle = !this.map.isObstacleFree(newPosition);
+					if (hasObstacle) throw new ObstacleHitException(newPosition);
+					this._position.setPoint(newPosition._x, newPosition._y)
+				}
+				break;
 
-    
+			case Orientation.North:
+				if (this._position._y === this.map.ymin) {
+					this._position._y = this.map.ymax
+				} else {
+					const newPosition = new Position(this._position._x, this._position._y - 1, this._position._orientation)
+					hasObstacle = !this.map.isObstacleFree(newPosition);
+					if (hasObstacle) throw new ObstacleHitException(newPosition);
+					this._position.setPoint(newPosition._x, newPosition._y)
+				}
+				break;
+
+			case Orientation.South:
+				if (this._position._y === this.map.ymax) {
+					this._position._y = this.map.ymin
+				} else {
+					const newPosition = new Position(this._position._x, this._position._y + 1, this._position._orientation)
+					hasObstacle = !this.map.isObstacleFree(newPosition);
+					if (hasObstacle) throw new ObstacleHitException(newPosition);
+					this._position.setPoint(newPosition._x, newPosition._y)
+				}
+				break;
+		}
+		return this._position;
+	}
+
+	/**
+	 * This function determine new direction of the Rover.
+	 * 1. Change direction
+	 */
+	turnRight(): Position {
+		switch (this._position._orientation) {
+			case Orientation.East:
+				this._position._orientation = Orientation.South;
+				break;
+			case Orientation.West:
+				this._position._orientation = Orientation.North;
+				break;
+			case Orientation.North:
+				this._position._orientation = Orientation.East;
+				break;
+			case Orientation.South:
+				this._position._orientation = Orientation.West;
+				break;
+		}
+		return this._position;
+	}
+
+	/**
+	 * This function determine new direction of the Rover.
+	 * 1. Change direction
+	 */
+	turnLeft(): Position {
+		switch (this._position._orientation) {
+			case Orientation.East:
+				this._position._orientation = Orientation.North;
+				break;
+			case Orientation.West:
+				this._position._orientation = Orientation.South;
+				break;
+			case Orientation.North:
+				this._position._orientation = Orientation.West;
+				break;
+			case Orientation.South:
+				this._position._orientation = Orientation.East;
+				break;
+		}
+		return this._position;
+	}
 }
