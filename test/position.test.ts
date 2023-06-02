@@ -6,46 +6,46 @@ import { Point } from "../src/classes/point.class";
 
 const obstacles: Point[] = [new Point(1, 1), new Point(15, 15), new Point(20, 20), new Point(25, 25)]
 
-type CaseMovement = {
+export type CaseMovement = {
 	basePosition: Position;
-	finalPosition: number;
+	finalPosition: Position;
 }
 
 const casesForForwardx: CaseMovement[] = [
 	{
 		basePosition: new Position(50, 0, Orientation.East),
-		finalPosition: -50
+		finalPosition: new Position(-50, 0, Orientation.East)
 	},
 	{
 		basePosition: new Position(49, 0, Orientation.East),
-		finalPosition: 50
+		finalPosition: new Position(50, 0, Orientation.East)
 	},
 	{
 		basePosition: new Position(-50, 0, Orientation.West),
-		finalPosition: 50
+		finalPosition: new Position(50, 0, Orientation.East)
 	},
 	{
 		basePosition: new Position(-49, 0, Orientation.West),
-		finalPosition: -50
+		finalPosition: new Position(-50, 0, Orientation.East)
 	},
 ]
 
 const casesForForwardy: CaseMovement[] = [
 	{
 		basePosition: new Position(0, -50, Orientation.South),
-		finalPosition: 50
+		finalPosition: new Position(0, 50, Orientation.South)
 	},
 	{
 		basePosition: new Position(0, -49, Orientation.South),
-		finalPosition: -50
+		finalPosition: new Position(0, -50, Orientation.South)
 	},
 	{
 		basePosition: new Position(0, 50, Orientation.North),
-		finalPosition: -50
+		finalPosition: new Position(0,-50, Orientation.North)
 	},
 	{
 		basePosition: new Position(0, 49, Orientation.North),
-		finalPosition: 50
+		finalPosition: new Position(0, 50, Orientation.North)
 	},
 ];
 
@@ -53,38 +53,38 @@ const casesForForwardy: CaseMovement[] = [
 const casesForBackwardx: CaseMovement[] = [
 	{
 		basePosition: new Position(-50, 0, Orientation.East),
-		finalPosition: 50
+		finalPosition: new Position(50, 0, Orientation.East),
 	},
 	{
 		basePosition: new Position(-49, 0, Orientation.East),
-		finalPosition: -50
+		finalPosition: new Position(-50, 0, Orientation.East),
 	},
 	{
 		basePosition: new Position(50, 0, Orientation.West),
-		finalPosition: -50
+		finalPosition: new Position(-50, 0, Orientation.West),
 	},
 	{
 		basePosition: new Position(49, 0, Orientation.West),
-		finalPosition: 50
+		finalPosition: new Position(50, 0, Orientation.West),
 	},
 ]
 
 const casesForBackwardy: CaseMovement[] = [
 	{
 		basePosition: new Position(0, 50, Orientation.South),
-		finalPosition: -50
+		finalPosition: new Position(0, -50, Orientation.South),
 	},
 	{
 		basePosition: new Position(0, 49, Orientation.South),
-		finalPosition: 50
+		finalPosition: new Position(0, 50, Orientation.South),
 	},
 	{
 		basePosition: new Position(0, -50, Orientation.North),
-		finalPosition: 50
+		finalPosition: new Position(0, 50, Orientation.South),
 	},
 	{
 		basePosition: new Position(0, -49, Orientation.North),
-		finalPosition: -50
+		finalPosition: new Position(0, -50, Orientation.South),
 	},
 ]
 
@@ -98,7 +98,7 @@ describe('forward function x', () => {
 			.build();
 
 		const position = rover.forward()
-		expect(position._x).toEqual(args.finalPosition);
+		expect(position).toEqual(args.finalPosition);
 	})
 });
 
@@ -112,11 +112,11 @@ describe('forward function y', () => {
 			.build();
 
 		const position = rover.forward()
-		expect(position._y).toEqual(args.finalPosition);
+		expect(position).toEqual(args.finalPosition);
 	})
 });
 
-describe('backward function', () => {
+describe('backward function x', () => {
 	test.each<CaseMovement>(casesForBackwardx)('it should go backward $args.finalPosition from $args.basePosition', (args: CaseMovement) => {
 		const map = new MarsMap(50, 50, obstacles);
 
@@ -126,11 +126,11 @@ describe('backward function', () => {
 			.build();
 
 		const position = rover.backward()
-		expect(position._x).toEqual(args.finalPosition);
+		expect(position).toEqual(args.finalPosition);
 	})
 });
 
-describe('backward function', () => {
+describe('backward function y', () => {
 	test.each<CaseMovement>(casesForBackwardy)('it should go backward $args.finalPosition from $args.basePosition', (args: CaseMovement) => {
 		const map = new MarsMap(50, 50, obstacles);
 
@@ -140,6 +140,6 @@ describe('backward function', () => {
 			.build();
 
 		const position = rover.backward()
-		expect(position._y).toEqual(args.finalPosition);
+		expect(position).toEqual(args.finalPosition);
 	})
 });
