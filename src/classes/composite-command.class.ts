@@ -1,6 +1,8 @@
+import { Orientation } from '../enums/orientation.enum';
 import { ICommand } from '../interfaces/icommand.interface';
-import { Point } from '../types/point.type';
 import { Entity } from './entity.class';
+import { Point } from './point.class';
+import { Position } from './position.class';
 export class CompositeCommand implements ICommand {
     private _children: Array<ICommand> = new Array<ICommand>;
     
@@ -8,11 +10,8 @@ export class CompositeCommand implements ICommand {
         this._children = children;
     }
 
-    execute(entity: Entity): Point {
-        let finalPosition: Point = {
-            x: 0,
-            y: 0,
-        };
+    execute(entity: Entity): Position {
+        let finalPosition: Position = new Position(0, 0, Orientation.East);
         this._children.forEach((child) => {
             finalPosition = child.execute(entity);
         });

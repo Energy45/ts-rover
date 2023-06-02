@@ -1,46 +1,46 @@
 import { MarsMap } from "../src/classes/map.class";
-import { Rover } from "../src/classes/rover.class";
-import { Direction } from "../src/enums/direction.enum";
-import { Point } from "../src/types/point.type";
 import { RoverBuilder } from "./utilities/rover.builder"
+import { Point } from "../src/classes/point.class";
+import { Orientation } from "../src/enums/orientation.enum";
+import { Position } from "../src/classes/position.class";
 
-const obstacles: Point[] = [{x:1, y:1}, {x:15, y:15}, {x:20, y:20}, {x:25, y:25}]
+const obstacles: Point[] = [new Point(1,1), new Point(15,15), new Point(20,20), new Point(25,25)]
 
 const casesForTurnLeft = [
     [
-        Direction.East,
-        Direction.North,
+        Orientation.East,
+        Orientation.North,
     ],
     [
-        Direction.North,
-        Direction.West,
+        Orientation.North,
+        Orientation.West,
     ],
     [
-        Direction.West,
-        Direction.South,
+        Orientation.West,
+        Orientation.South,
     ],
     [
-        Direction.South,
-        Direction.East,
+        Orientation.South,
+        Orientation.East,
     ]
 ]
 
 const casesForTurnRight = [
     [
-        Direction.North,
-        Direction.East,
+        Orientation.North,
+        Orientation.East,
     ],
     [
-        Direction.West,
-        Direction.North,
+        Orientation.West,
+        Orientation.North,
     ],
     [
-        Direction.South,
-        Direction.West,
+        Orientation.South,
+        Orientation.West,
     ],
     [
-        Direction.East,
-        Direction.South,
+        Orientation.East,
+        Orientation.South,
     ]
 ]
 
@@ -48,35 +48,28 @@ const casesForTurnRight = [
 describe('turnLeft function', () => {
     test.each(casesForTurnLeft)('it should change direction to $targetDirection ', (baseDirection, targetDirection) => {
         const map = new MarsMap(50, 50, obstacles);
-        const basePosition: Point = {
-          x: 0,
-          y: 0,
-        }
+        const basePosition = new Position(0,0, baseDirection)
         const rover = new RoverBuilder()
           .setMap(map)
           .setPosition(basePosition)
-          .setDirection(baseDirection)
           .build();
           
-        const [position, direction] = rover.turnLeft();
-        expect(direction).toEqual(targetDirection);
+        const position = rover.turnLeft();
+        expect(position._orientation).toEqual(targetDirection);
     });
 })
 
 describe('turnRight function', () => {
     test.each(casesForTurnRight)('it should change direction to $targetDirection ', (baseDirection, targetDirection) => {
         const map = new MarsMap(50, 50, obstacles);
-        const basePosition: Point = {
-          x: 0,
-          y: 0,
-        }
+        const basePosition = new Position(0,0, baseDirection)
+
         const rover = new RoverBuilder()
           .setMap(map)
           .setPosition(basePosition)
-          .setDirection(baseDirection)
           .build();
           
-        const [position, direction] = rover.turnRight();
-        expect(direction).toEqual(targetDirection);
+        const position = rover.turnRight();
+        expect(position._orientation).toEqual(targetDirection);
     });
 });

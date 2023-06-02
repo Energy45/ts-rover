@@ -5,10 +5,10 @@ import { ForwardCommand } from "./moveCommands/forward-command.class";
 import { BackwardCommand } from "./moveCommands/backward-command.class";
 import { TurnLeftCommand } from "./moveCommands/turnleft-command.class";
 import { TurnRightCommand } from "./moveCommands/turnright-command.class";
-import { Point } from "../types/point.type";
+import { Position } from "./position.class";
 
 export class CommandInterpretor {
-    handleCommand(entity: Entity, command: string): Point {
+    handleCommand(entity: Entity, command: string): Position {
         const commandSeparate = command.split('');
 
         let childs: Array<ICommand> = new Array<ICommand>();

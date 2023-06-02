@@ -1,48 +1,46 @@
-// import { MarsMap } from "../src/classes/map.class";
-// import { Rover } from "../src/classes/rover.class";
-// import { Direction } from "../src/enums/direction.enum";
-// import { ObstacleHitException } from "../src/exceptions/obstacle-hit.exception";
-// import { Point } from "../src/types/point.type";
-// import { RoverBuilder } from "./utilities/rover.builder"
+import { MarsMap } from "../src/classes/map.class";
+import { ObstacleHitException } from "../src/exceptions/obstacle-hit.exception";
+import { RoverBuilder } from "./utilities/rover.builder"
+import { Position } from "../src/classes/position.class";
+import { Orientation } from "../src/enums/orientation.enum";
+import { Point } from "../src/classes/point.class";
+import { CommandInterpretor } from "../src/classes/command-interpretor.class";
 
-// const obstacles: Point[] = [{x:1, y:1}, {x:15, y:15}, {x:20, y:20}, {x:25, y:25}]
+const obstacles: Point[] = [new Point(1,1), new Point(15,15), new Point(20,20), new Point(25,25)]
 
-// describe('handleCommand function', () => {
-//     test('', () => {
-//         const map = new MarsMap(50, 50, obstacles);
-//         const basePosition: Point = {
-//           x: 0,
-//           y: 0,
-//         }
-//         const rover = new RoverBuilder()
-//           .setMap(map)
-//           .setPosition(basePosition)
-//           .setDirection(Direction.East)
-//           .build();
+describe('handleCommand function', () => {
+	test('should throw ObstacleHitException', () => {
+		const map = new MarsMap(50, 50, obstacles);
+		const defaultPosition = new Position(0,0, Orientation.East)
+		const rover = new RoverBuilder()
+			.setMap(map)
+			.setPosition(defaultPosition)
+			.build()
 
-//         const t = () => {
-//             rover.handleCommand('AGA');
-//         }
+		const commandInterpretor = new CommandInterpretor();
 
-//         expect(t).toThrow(ObstacleHitException);
-//     })
+		const fund = () => {
+			return commandInterpretor.handleCommand(rover, 'AGA');
+		}
 
-//     test('', () => {
-//         const map = new MarsMap(50, 50, obstacles);
-//         const basePosition: Point = {
-//           x: 0,
-//           y: 0,
-//         }
-//         const rover = new RoverBuilder()
-//           .setMap(map)
-//           .setPosition(basePosition)
-//           .setDirection(Direction.East)
-//           .build();
+		expect(fund).toThrow(ObstacleHitException);
+	})
 
-//         const t = () => {
-//             rover.handleCommand('AAA');
-//         }
+	test('', () => {
+		const map = new MarsMap(50, 50, obstacles);
+		const defaultPosition = new Position(0,0, Orientation.East)
 
-//         expect(t).toBe(t);
-//     })
-// })
+		const rover = new RoverBuilder()
+			.setMap(map)
+			.setPosition(defaultPosition)
+			.build();
+
+		const positionExpected = new Position(3,0, Orientation.East);
+
+		const commandInterpretor = new CommandInterpretor();
+			
+		const positionReturned = commandInterpretor.handleCommand(rover, 'AAA');
+
+		expect(positionReturned).toEqual(positionExpected);
+	})
+})

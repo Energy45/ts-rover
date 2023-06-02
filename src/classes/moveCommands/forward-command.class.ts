@@ -1,9 +1,9 @@
 import { ICommand } from "../../interfaces/icommand.interface";
-import { Point } from "../../types/point.type";
 import { Entity } from "../entity.class";
+import { Position } from "../position.class";
 
 export class ForwardCommand implements ICommand {
-    execute(entity: Entity): Point {
+    execute(entity: Entity): Position {
         return entity.forward();
     }
     
