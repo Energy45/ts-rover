@@ -6,5 +6,4 @@ export class BackwardCommand implements ICommand {
     execute(entity: Entity): Position {
         return entity.backward();
     }
-
 }

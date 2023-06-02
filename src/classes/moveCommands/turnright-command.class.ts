@@ -6,5 +6,5 @@ export class TurnRightCommand implements ICommand {
     execute(entity: Entity): Position {
         return entity.turnRight();
     }
-    
 }
+
