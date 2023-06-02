@@ -22,11 +22,11 @@ const casesForForwardx: CaseMovement[] = [
 	},
 	{
 		basePosition: new Position(-50, 0, Orientation.West),
-		finalPosition: new Position(50, 0, Orientation.East)
+		finalPosition: new Position(50, 0, Orientation.West)
 	},
 	{
 		basePosition: new Position(-49, 0, Orientation.West),
-		finalPosition: new Position(-50, 0, Orientation.East)
+		finalPosition: new Position(-50, 0, Orientation.West)
 	},
 ]
 
@@ -80,66 +80,66 @@ const casesForBackwardy: CaseMovement[] = [
 	},
 	{
 		basePosition: new Position(0, -50, Orientation.North),
-		finalPosition: new Position(0, 50, Orientation.South),
+		finalPosition: new Position(0, 50, Orientation.North),
 	},
 	{
 		basePosition: new Position(0, -49, Orientation.North),
-		finalPosition: new Position(0, -50, Orientation.South),
+		finalPosition: new Position(0, -50, Orientation.North),
 	},
 ]
 
 describe('forward function x', () => {
-	test.each<CaseMovement>(casesForForwardx)(`it should go forward to $args.finalPosition from $args.basePosition `, (args: CaseMovement) => {
+	test.each<CaseMovement>(casesForForwardx)(`it should go forward from $basePosition to $finalPosition `, ({basePosition, finalPosition}: CaseMovement) => {
 		const map = new MarsMap(50, 50, obstacles);
 
 		const rover = new RoverBuilder()
 			.setMap(map)
-			.setPosition(args.basePosition)
+			.setPosition(basePosition)
 			.build();
 
 		const position = rover.forward()
-		expect(position).toEqual(args.finalPosition);
+		expect(position).toEqual(finalPosition);
 	})
 });
 
 describe('forward function y', () => {
-	test.each<CaseMovement>(casesForForwardy)(`it should go forward to $args.finalPosition from $args.basePosition `, (args: CaseMovement) => {
+	test.each<CaseMovement>(casesForForwardy)(`it should go forward from $basePosition to $finalPosition `, ({basePosition, finalPosition}: CaseMovement) => {
 		const map = new MarsMap(50, 50, obstacles);
 
 		const rover = new RoverBuilder()
 			.setMap(map)
-			.setPosition(args.basePosition)
+			.setPosition(basePosition)
 			.build();
 
 		const position = rover.forward()
-		expect(position).toEqual(args.finalPosition);
+		expect(position).toEqual(finalPosition);
 	})
 });
 
 describe('backward function x', () => {
-	test.each<CaseMovement>(casesForBackwardx)('it should go backward $args.finalPosition from $args.basePosition', (args: CaseMovement) => {
+	test.each<CaseMovement>(casesForBackwardx)('it should go backward from $basePosition to $finalPosition ', ({basePosition, finalPosition}: CaseMovement) => {
 		const map = new MarsMap(50, 50, obstacles);
 
 		const rover = new RoverBuilder()
 			.setMap(map)
-			.setPosition(args.basePosition)
+			.setPosition(basePosition)
 			.build();
 
 		const position = rover.backward()
-		expect(position).toEqual(args.finalPosition);
+		expect(position).toEqual(finalPosition);
 	})
 });
 
 describe('backward function y', () => {
-	test.each<CaseMovement>(casesForBackwardy)('it should go backward $args.finalPosition from $args.basePosition', (args: CaseMovement) => {
+	test.each<CaseMovement>(casesForBackwardy)('it should go backward from $basePosition to $finalPosition ', ({basePosition, finalPosition}: CaseMovement) => {
 		const map = new MarsMap(50, 50, obstacles);
 
 		const rover = new RoverBuilder()
 			.setMap(map)
-			.setPosition(args.basePosition)
+			.setPosition(basePosition)
 			.build();
 
 		const position = rover.backward()
-		expect(position).toEqual(args.finalPosition);
+		expect(position).toEqual(finalPosition);
 	})
 });
